@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - Sagad Farms</title>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#f8f9fa;padding:15px;max-width:600px;margin:auto}
+.header{background:#0A5C36;color:white;padding:15px;border-radius:10px;text-align:center;margin-bottom:15px}
+.box{background:white;padding:15px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.btn{background:#0A5C36;color:white;border:none;padding:15px;border-radius:10px;width:100%;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}
+.btn-black{background:#000}
+.btn-whatsapp{background:#25D366}
+.account-box{background:#e8f5e9;border:2px dashed #0A5C36;padding:15px;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="header">
+<h3>💳 Checkout - Sagad Farms</h3>
+<p id="orderId"></p>
+</div>
+<div class="box">
+<h4>📋 Your Order</h4>
+<div id="orderList"></div>
+<h2 style="color:#0A5C36;margin-top:15px">Total: <span id="totalAmt">₦0</span></h2>
+</div>
+<div class="box">
+<h3>💳 OPTION 1: Pay with Paystack</h3>
+<p style="font-size:13px;color:#666;margin:10px 0">Money goes DIRECT to Sagad Farms</p>
+<button class="btn" onclick="payPaystack()">Pay Now with Paystack</button>
+</div>
+<div class="box">
+<h3>🏦 OPTION 2: Direct Transfer</h3>
+<div class="account-box">
+<p><b>Account Name:</b><br><b style="font-size:18px">SAGAD FARMS LTD</b></p>
+<p><b>Account Number:</b><br><span style="font-size:26px;font-weight:bold">0123456789</span> <button onclick="alert('Copied!')" style="padding:5px 10px">COPY</button></p>
+<p style="font-size:12px;color:red">Canza wannan number da naka na gaskiya!</p>
+</div>
+</div>
+<div class="box">
+<button class="btn" style="background:#25D366" onclick="whatsappOrder()">📱 Send Order via WhatsApp</button>
+<button class="btn btn-black" onclick="window.location.href='index.html'">← Back to Shop</button>
+</div>
+<script>
+const total=localStorage.getItem('sagad_total')||0;
+const items=JSON.parse(localStorage.getItem('sagad_items')||'[]');
+const orderId='SAGAD-'+Math.floor(10000+Math.random()*90000);
+document.getElementById('orderId').innerText='Order ID: '+orderId;
+document.getElementById('totalAmt').innerText='₦'+Number(total).toLocaleString();
+let html='';items.forEach(i=>{html+=`<p>• ${i.name} - ₦${i.price.toLocaleString()}</p>`});
+document.getElementById('orderList').innerHTML=html;
+function payPaystack(){
+let handler=PaystackPop.setup({
+key:'pk_test_xxxxx',email:'customer@sagadfarms.com',amount:total*100,currency:'NGN',ref:orderId,
+callback:function(res){alert('✅ Payment Successful! Ref: '+res.reference);whatsappOrder();},
+onClose:function(){alert('Cancelled');}
+});handler.openIframe();
+}
+function whatsappOrder(){
+let msg=`Sannu Sagad Farms! NEW ORDER%0AOrder ID: ${orderId}%0AItems: ${items.map(i=>i.name).join(', ')}%0ATotal: ₦${Number(total).toLocaleString()}%0A%0ANa biya, ga shaidar biya. Address dina: `;
+window.open('https://wa.me/2348030000000?text='+msg,'_blank');
+}
+</script>
+</body>
+</html>
