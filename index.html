@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAGAD FARMS - Dantata Rice</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#f8f9fa}
+.header{background:linear-gradient(135deg,#0A5C36,#1a8a5a);color:white;padding:20px;text-align:center}
+.hero{background:#000;color:white;padding:30px;text-align:center}
+.container{padding:15px;max-width:600px;margin:auto}
+.product{background:white;border-radius:15px;padding:15px;margin-bottom:15px;box-shadow:0 3px 10px rgba(0,0,0,0.1)}
+.price{color:#0A5C36;font-size:22px;font-weight:bold;margin:8px 0}
+.btn{background:#0A5C36;color:white;border:none;padding:12px;border-radius:8px;width:100%;font-size:16px;font-weight:bold;cursor:pointer}
+.cart-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:3px solid #0A5C36;padding:15px;max-width:600px;margin:auto}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🌾 SAGAD FARMS LTD</h1>
+<p><b>DANTATA RICE</b> - Premium Rice</p>
+<p>📍 1000 Hectares at Tiga Dam, Kano</p>
+</div>
+<div class="hero">
+<h2>From Our Farm to Your Home</h2>
+<p>Direct from our 1000 Hectares Farm</p>
+</div>
+<div class="container">
+<h3 style="margin:15px 0;color:#0A5C36">🛒 Our Products</h3>
+<div class="product">
+<h3>Dantata Rice 50kg - Full Bag</h3>
+<p>Best Seller - Family Size</p>
+<div class="price">₦85,000</div>
+<button class="btn" onclick="addCart('50kg Bag',85000)">Add to Cart 🛒</button>
+</div>
+<div class="product">
+<h3>Dantata Rice 25kg - Half Bag</h3>
+<p>Popular Choice</p>
+<div class="price">₦43,000</div>
+<button class="btn" onclick="addCart('25kg Bag',43000)">Add to Cart 🛒</button>
+</div>
+<div class="product">
+<h3>Dantata Rice 10kg</h3>
+<p>Small Family Pack</p>
+<div class="price">₦18,000</div>
+<button class="btn" onclick="addCart('10kg Bag',18000)">Add to Cart 🛒</button>
+</div>
+<div class="product">
+<h3>Dantata Rice 5kg</h3>
+<p>For Small Homes</p>
+<div class="price">₦9,500</div>
+<button class="btn" onclick="addCart('5kg Bag',9500)">Add to Cart 🛒</button>
+</div>
+<div style="height:120px"></div>
+</div>
+<div class="cart-bar">
+<div style="display:flex;justify-content:space-between;margin-bottom:10px">
+<span>🛒 <b id="cartCount">0</b> items</span>
+<span style="font-weight:bold;color:#0A5C36" id="cartTotal">₦0</span>
+</div>
+<button class="btn" style="background:#000;font-size:18px" onclick="goCheckout()">CHECKOUT NOW →</button>
+<p style="text-align:center;font-size:11px;margin-top:8px">✅ Real Payment - Direct to Sagad Farms</p>
+</div>
+<script>
+let items=[],total=0;
+function addCart(name,price){
+ items.push({name,price});total+=price;
+ document.getElementById('cartCount').innerText=items.length;
+ document.getElementById('cartTotal').innerText='₦'+total.toLocaleString();
+ alert(name+' An saka a Cart! 🛒');
+}
+function goCheckout(){
+ if(items.length==0){alert('Cart is empty!');return;}
+ localStorage.setItem('sagad_total',total);
+ localStorage.setItem('sagad_items',JSON.stringify(items));
+ window.location.href='checkout.html';
+}
+</script>
+</body>
+  </html>
